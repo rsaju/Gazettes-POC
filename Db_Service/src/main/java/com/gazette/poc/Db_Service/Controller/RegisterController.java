@@ -5,6 +5,7 @@ import com.gazette.poc.Db_Service.Service.RegisterService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -25,6 +26,5 @@ public class RegisterController {
         Gson gson = new Gson();
         Register register = gson.fromJson(bufferedReader, Register.class);
         registerService.save(register);
-
     }
 }
