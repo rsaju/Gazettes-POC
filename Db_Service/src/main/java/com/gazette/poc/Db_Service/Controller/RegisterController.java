@@ -4,6 +4,7 @@ import com.gazette.poc.Db_Service.Model.Register;
 import com.gazette.poc.Db_Service.Service.RegisterService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,7 @@ public class RegisterController {
     @Autowired
     private RegisterService registerService;
 
-    @RequestMapping("/add_user")
+    @PostMapping("/add_user")
     public void registerUser(HttpServletRequest request) throws IOException {
 
         BufferedReader bufferedReader = request.getReader();
