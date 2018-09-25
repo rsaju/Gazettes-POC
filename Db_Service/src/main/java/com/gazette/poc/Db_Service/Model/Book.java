@@ -16,6 +16,10 @@ public class Book {
     @Column(name = "bookauthor")
     private String bookAuthor;
 
+    @Column(name="bookcount")
+
+    private String bookcount;
+
     public String getBookAuthor() {
         return bookAuthor;
     }
@@ -23,10 +27,6 @@ public class Book {
     public void setBookAuthor(String bookAuthor) {
         this.bookAuthor = bookAuthor;
     }
-
-    @Column(name="bookcount")
-
-    private String bookcount;
 
     public int getBid() {
         return bid;
