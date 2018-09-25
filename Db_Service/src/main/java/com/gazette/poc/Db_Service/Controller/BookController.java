@@ -50,7 +50,7 @@ public class BookController {
     }
 
     @GetMapping("/findAllBook")
-    @HystrixCommand(fallbackMethod = "getFallBack")
+//    @HystrixCommand(fallbackMethod = "getFallBack")
     public String findAllBook() {
 
         List<Book> books = bookService.findAll();
