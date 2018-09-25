@@ -27,7 +27,7 @@ public class BookController {
     @GetMapping("/findBook/{bookname}")
     public String searchBookByName(HttpServletRequest request ,@PathVariable("bookname") String bookname){
 
-        List<Book> books = bookService.findByBookName(bookname);
+        List<Book> books = bookService.findBybookname(bookname);
         String jsonBook = gson.toJson(books);
 //        ResponseEntity<String> responseEntity = new ResponseEntity<String>
         return jsonBook;
