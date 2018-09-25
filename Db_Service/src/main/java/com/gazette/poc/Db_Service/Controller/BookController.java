@@ -34,7 +34,7 @@ public class BookController {
         String jsonBook = null;
         try {
             String bookName = URLDecoder.decode(bookname, "UTF-8");
-            List<Book> books = bookService.findBybookname(bookName);
+            List<Book> books = bookService.findByBookName(bookName);
             jsonBook = gson.toJson(books);
 //        ResponseEntity<String> responseEntity = new ResponseEntity<String>
 
