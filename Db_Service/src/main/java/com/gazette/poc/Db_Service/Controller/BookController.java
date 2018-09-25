@@ -47,9 +47,14 @@ public class BookController {
     }
 
     @DeleteMapping("/deleteBook/{bookId}")
-    public String deleteBook(HttpServletRequest request, @PathVariable("bookId") int bookId) throws Exception {
-        bookService.deleteById(bookId);
-        return "Book deleteed with Id:"+bookId;
+    public String deleteBook(HttpServletRequest request, @PathVariable("bookId") int bookId){
+        try{
+            bookService.deleteById(bookId);
+            return "Book deleteed with Id:"+bookId;
+        }catch(Exception e){
+            return "Delete Operation failed";
+        }
+
     }
 
 }
