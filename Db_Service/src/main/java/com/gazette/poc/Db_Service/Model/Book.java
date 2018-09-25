@@ -8,7 +8,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int bid;
+    private int bookId;
 
     @Column(name = "bookname")
     private String bookName;
@@ -35,20 +35,20 @@ public class Book {
         this.bookAuthor = bookAuthor;
     }
 
-    public int getBid() {
-        return bid;
-    }
-
-    public void setBid(int bid) {
-        this.bid = bid;
-    }
-
     public String getbookName() {
         return bookName;
     }
 
     public void setbookName(String bookname) {
         this.bookName = bookname;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
 }
