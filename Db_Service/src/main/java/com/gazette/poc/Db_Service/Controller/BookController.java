@@ -6,10 +6,7 @@ import com.google.gson.Gson;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,6 +67,16 @@ public class BookController {
         BufferedReader bufferedReader = request.getReader();
         Book book=gson.fromJson(bufferedReader,Book.class);
         bookService.save(book);
+    }
+
+    @DeleteMapping("/deleteBook/{bookId}")
+    public String deleteBook(HttpServletRequest request, @PathVariable("bookId") int bookId){
+        try{
+            bookService.deleteBybookId(bookId);
+            return "Book deleted from Library"+bookId;
+        }catch(Exception e){
+            return "Failed to delete Book";
+        }
     }
 
 
