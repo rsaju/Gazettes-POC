@@ -39,7 +39,7 @@
                     <a class="nav-link js-scroll-trigger" href="#books">Books</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#signup">Register</a>
+                    <a class="nav-link js-scroll-trigger" href="/register">Register</a>
                 </li>
             </ul>
         </div>
@@ -52,7 +52,7 @@
         <div class="mx-auto text-center">
             <h1 class="mx-auto my-0 text-uppercase">Library Manager</h1>
             <h2 class="text-white-50 mx-auto mt-2 mb-5">View and Search for books in the Library</h2>
-            <form class="form-inline d-flex">
+            <form class="form-inline d-flex" action="/searchbook" method="get">
                 <input type="text" class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputEmail" placeholder="Enter the name of the book...">
                 <button type="submit" class="btn btn-primary mx-auto">Search</button>
             </form>
