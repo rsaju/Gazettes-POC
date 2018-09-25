@@ -13,7 +13,19 @@ public class Book {
     @Column(name="bookname")
     private String bookname;
 
+    @Column(name = "bookauthor")
+    private String bookAuthor;
+
+    public String getBookAuthor() {
+        return bookAuthor;
+    }
+
+    public void setBookAuthor(String bookAuthor) {
+        this.bookAuthor = bookAuthor;
+    }
+
     @Column(name="bookcount")
+
     private String bookcount;
 
     public int getBid() {
