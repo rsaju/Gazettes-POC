@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface BookService extends JpaRepository<Book,Integer> {
 
-    List<Book> findBybookname(String name);
+    List<Book> findByBookName(String name);
 }
