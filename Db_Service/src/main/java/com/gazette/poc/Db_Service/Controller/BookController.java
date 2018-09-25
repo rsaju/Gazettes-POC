@@ -3,6 +3,7 @@ package com.gazette.poc.Db_Service.Controller;
 import com.gazette.poc.Db_Service.Model.Book;
 import com.gazette.poc.Db_Service.Service.BookService;
 import com.google.gson.Gson;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 @RestController
@@ -25,19 +28,41 @@ public class BookController {
     Gson gson = new Gson();
 
     @GetMapping("/findBook/{bookname}")
-    public String searchBookByName(HttpServletRequest request ,@PathVariable("bookname") String bookname){
+    @HystrixCommand(fallbackMethod = "getSearchByName")
+    public String searchBookByName(HttpServletRequest request ,@PathVariable("bookname") String bookname) throws UnsupportedEncodingException {
 
-        List<Book> books = bookService.findBybookname(bookname);
-        String jsonBook = gson.toJson(books);
+        String jsonBook = null;
+        try {
+            String bookName = URLDecoder.decode(bookname, "UTF-8");
+            List<Book> books = bookService.findBybookname(bookName);
+            jsonBook = gson.toJson(books);
 //        ResponseEntity<String> responseEntity = new ResponseEntity<String>
+
+        }
+        catch(Exception e) {
+            System.out.println("Exception thrown at search book by name");
+        }
         return jsonBook;
     }
 
+    public String getSearchByName(){
+        return "fall back method for searchByName method";
+    }
+
     @GetMapping("/findAllBook")
+    @HystrixCommand(fallbackMethod = "getFallBack")
     public String findAllBook() {
+
         List<Book> books = bookService.findAll();
         String jsonBook = gson.toJson(books);
         return jsonBook;
+
+    }
+
+    public String getFallBack(){
+        System.out.println("Inside Fall Back Method");
+        return "Hystrix is working";
+
     }
 
     @PostMapping("/addBook")
