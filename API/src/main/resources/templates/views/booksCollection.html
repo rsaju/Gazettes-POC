@@ -89,10 +89,10 @@
                     <td>Count</td>
                 </tr>
                 <tr th:each="book:${books}">
-                    <td th:text="${book.bid}"/>
-                    <td th:text="${book.bookname}"/>
+                    <td th:text="${book.bookId}"/>
+                    <td th:text="${book.bookName}"/>
                     <td th:text="${book.bookAuthor}"/>
-                    <td th:text="${book.bookcount}"/>
+                    <td th:text="${book.bookCount}"/>
                 </tr>
             </table>
         </div>

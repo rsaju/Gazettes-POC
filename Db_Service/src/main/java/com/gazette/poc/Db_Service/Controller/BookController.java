@@ -28,21 +28,20 @@ public class BookController {
     @HystrixCommand(fallbackMethod = "getSearchByName")
     public String searchBookByName(HttpServletRequest request ,@PathVariable("bookname") String bookname) throws UnsupportedEncodingException {
 
-        String jsonBook = null;
-        try {
+            String jsonBook = null;
             String bookName = URLDecoder.decode(bookname, "UTF-8");
             List<Book> books = bookService.findByBookName(bookName);
+            if(books.size()==0){
+                System.out.println("Exception thrown at search book by name");
+                throw new RuntimeException();
+            }
             jsonBook = gson.toJson(books);
-//        ResponseEntity<String> responseEntity = new ResponseEntity<String>
 
-        }
-        catch(Exception e) {
-            System.out.println("Exception thrown at search book by name");
-        }
         return jsonBook;
     }
 
-    public String getSearchByName(){
+    public String getSearchByName(HttpServletRequest request ,@PathVariable("bookname") String bookname){
+        System.out.println("Fall back method in search by name");
         return "fall back method for searchByName method";
     }
 

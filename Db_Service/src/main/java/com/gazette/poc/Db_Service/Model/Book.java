@@ -8,6 +8,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="bid")
     private int bookId;
 
     @Column(name = "bookname")
