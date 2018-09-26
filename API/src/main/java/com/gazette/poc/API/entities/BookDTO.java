@@ -1,23 +1,23 @@
 package com.gazette.poc.API.entities;
 
 public class BookDTO {
-    private String bid;
-    private String bookname;
-    private String bookAuthor;
-    private Integer bookcount;
+    private Integer bookId;
+    private String bookName;
 
-
-    public String getBid() {
-        return bid;
+    public Integer getBookId() {
+        return bookId;
     }
 
-    public void setBid(String bid) {
-        this.bid = bid;
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
     }
 
-    public String getBookname() {
+    public String getBookName() {
+        return bookName;
+    }
 
-        return bookname;
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
     }
 
     public String getBookAuthor() {
@@ -28,17 +28,15 @@ public class BookDTO {
         this.bookAuthor = bookAuthor;
     }
 
-    public void setBookname(String bookname) {
-        this.bookname = bookname;
-
+    public Integer getBookCount() {
+        return bookCount;
     }
 
-    public Integer getBookcount() {
-        return bookcount;
+    public void setBookCount(Integer bookCount) {
+        this.bookCount = bookCount;
     }
 
-    public void setBookcount(Integer bookcount) {
-        this.bookcount = bookcount;
-    }
+    private String bookAuthor;
+    private Integer bookCount;
 
 }

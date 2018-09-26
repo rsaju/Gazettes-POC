@@ -3,7 +3,6 @@ package com.gazette.poc.API.controllers;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gazette.poc.API.entities.BookDTO;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.ServiceInstance;
@@ -29,10 +28,13 @@ public class BookController {
     RestTemplateBuilder templateBuilder;
 
     @GetMapping("/searchbook")
-    public void findBookByName(@RequestParam("bookname") String bookName) throws Exception{
+    public String findBookByName(@RequestParam("bookname") String bookName,Model model) throws Exception{
         RestTemplate template = templateBuilder.build();
-        ResponseEntity responseEntity = template.getForEntity(getBaseUrl("Db_Service")+"/findBook"+URLEncoder.encode(bookName,"UTF-8"),String.class);
-        System.out.println(responseEntity);
+        ResponseEntity responseEntity = template.getForEntity(getBaseUrl("Db_Service")+"/findBook/"+URLEncoder.encode(bookName,"UTF-8"),String.class);
+        ObjectMapper mapper = new ObjectMapper();
+        List<BookDTO> bookDTOList = mapper.readValue(responseEntity.getBody().toString(),new TypeReference<List<BookDTO>>(){});
+        model.addAttribute("books",bookDTOList);
+        return "booksCollection";
     }
     @GetMapping("/findAllBooks")
     public String findAllBooks(Model model) throws IOException {
@@ -43,6 +45,7 @@ public class BookController {
         model.addAttribute("books",bookDTOList);
         return "booksCollection";
     }
+
     private String getBaseUrl(String serviceName){
         List<ServiceInstance> instances = discoveryClient.getInstances(serviceName);
         String baseUrl = instances.get(0).getUri().toString();
