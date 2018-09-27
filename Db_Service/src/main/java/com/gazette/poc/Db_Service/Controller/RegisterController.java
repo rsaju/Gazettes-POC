@@ -27,6 +27,5 @@ public class RegisterController {
         Gson gson = new Gson();
         Register register = gson.fromJson(bufferedReader, Register.class);
         registerService.save(register);
-        System.out.println("test ribbon branch");
     }
 }
