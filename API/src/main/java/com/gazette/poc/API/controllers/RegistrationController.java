@@ -11,17 +11,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 public class RegistrationController {
 
-    @Autowired
-    DiscoveryClient discoveryClient;
-
-    @Autowired
-    RestTemplateBuilder templateBuilder;
+    @Inject
+    RestTemplate restTemplate;
 
     @GetMapping("/register")
     public String getSignUpForm() {
@@ -32,16 +30,9 @@ public class RegistrationController {
     public String registerUser(@Valid UserDTO user) throws RuntimeException {
         Gson gson = new Gson();
         String json = gson.toJson(user);
-        RestTemplate template = templateBuilder.build();
-        if (template.postForEntity(getBaseUrl("Db_Service") + "/add_user", json, String.class).getStatusCode().is2xxSuccessful()) {
+        if (restTemplate.postForEntity("http://db-service"+ "/add_user", json, String.class).getStatusCode().is2xxSuccessful()) {
             return "homepage";
         }
         else return "error";
-    }
-
-    private String getBaseUrl(String serviceName){
-        List<ServiceInstance> instances = discoveryClient.getInstances(serviceName);
-        String baseUrl = instances.get(0).getUri().toString();
-        return baseUrl;
     }
 }

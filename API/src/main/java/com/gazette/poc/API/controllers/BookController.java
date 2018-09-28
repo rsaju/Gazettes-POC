@@ -1,5 +1,6 @@
 package com.gazette.poc.API.controllers;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gazette.poc.API.entities.BookDTO;
@@ -14,12 +15,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
 
 @Controller
 public class BookController {
+
+    @Inject
+    RestTemplate restTemplate;
 
     @Autowired
     DiscoveryClient discoveryClient;
@@ -29,8 +34,7 @@ public class BookController {
 
     @GetMapping("/searchbook")
     public String findBookByName(@RequestParam("bookname") String bookName,Model model) throws Exception{
-        RestTemplate template = templateBuilder.build();
-        ResponseEntity responseEntity = template.getForEntity(getBaseUrl("Db_Service")+"/findBook/"+URLEncoder.encode(bookName,"UTF-8"),String.class);
+        ResponseEntity responseEntity = restTemplate.getForEntity("http://db-service"+"/findBook/"+URLEncoder.encode(bookName,"UTF-8"),String.class);
         ObjectMapper mapper = new ObjectMapper();
         List<BookDTO> bookDTOList = mapper.readValue(responseEntity.getBody().toString(),new TypeReference<List<BookDTO>>(){});
         model.addAttribute("books",bookDTOList);
@@ -39,7 +43,7 @@ public class BookController {
     @GetMapping("/findAllBooks")
     public String findAllBooks(Model model) throws IOException {
         RestTemplate template = templateBuilder.build();
-        ResponseEntity responseEntity = template.getForEntity(getBaseUrl("Db_Service")+"/findAllBook",String.class);
+        ResponseEntity responseEntity = template.getForEntity(getBaseUrl("db-service")+"/findAllBook",String.class);
         ObjectMapper mapper = new ObjectMapper();
         List<BookDTO> bookDTOList = mapper.readValue(responseEntity.getBody().toString(),new TypeReference<List<BookDTO>>(){});
         model.addAttribute("books",bookDTOList);
