@@ -33,7 +33,7 @@ public class RegistrationController {
         Gson gson = new Gson();
         String json = gson.toJson(user);
         RestTemplate template = templateBuilder.build();
-        if (template.postForEntity(getBaseUrl("Db_Service") + "/add_user", json, String.class).getStatusCode().is2xxSuccessful()) {
+        if (template.postForEntity(getBaseUrl("db-service") + "/add_user", json, String.class).getStatusCode().is2xxSuccessful()) {
             return "homepage";
         }
         else return "error";
