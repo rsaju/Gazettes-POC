@@ -1,0 +1,14 @@
+version: '3'
+services:
+  discovery-server:
+    image: discovery-server
+    ports:
+     - "8761:8761"
+  configserver:
+    image: configserver
+    ports:
+     - "8888:8888"
+    environment:
+      - "SPRING_PROFILE_ACTIVE=docker"
+    links:
+     - discovery-server
