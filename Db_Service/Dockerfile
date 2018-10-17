@@ -1,5 +1,5 @@
 FROM openjdk:8-jdk-alpine
-LABEL maintainer="aswin"
+LABEL maintainer="roshan"
 
 RUN apk --update --no-cache add curl
 
