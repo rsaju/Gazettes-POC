@@ -1,0 +1,49 @@
+version: "2.1"
+
+services:
+  configserver:
+    build:
+      context: ../ConfigServer
+    restart: always
+    ports:
+      - 8888:8888
+    logging:
+      driver: none
+      
+  discovery-server:
+    build:
+      context: ../DiscoveryService
+    restart: always
+    depends_on:
+      configserver:
+        condition: service_healthy
+    ports:
+      - 8761:8761
+    logging:
+      driver: none   
+
+  api:
+    build:
+      context: ../API
+    restart: always
+    depends_on:
+      configserver:
+        condition : service_healthy
+      discovery-server:
+        condition: service_healthy
+    ports:
+      - 8081:8081
+    
+  db-service:
+    build:
+      context: ../Db_Service
+    restart: always
+    depends_on:
+      configserver:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+    ports:
+      - 8082:8082
+    logging:
+      driver: none
