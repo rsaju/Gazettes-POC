@@ -1,4 +1,9 @@
-FROM openjdk:8
-ADD target/API.jar API.jar
+FROM openjdk:8-jdk-alpine
+LABEL maintainer="aswin"
+
+RUN apk --update --no-cache add curl
+
+ADD ./target/API.jar /app/
+CMD ["java", "-Xmx200m", "-jar", "/app/API.jar"]
+
 EXPOSE 8081
-ENTRYPOINT ["java" , "-jar" , "API.jar"]
