@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: discovery-server
+  cloud:
+    config:
+      uri: http://configserver:8888
+      fail-fast: true
