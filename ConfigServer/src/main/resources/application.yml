@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: configserver
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/rsaju/Configuration-Property.git
+          username: rsaju
+          password: WltIndia@2018
+
+server:
+  port: 8888
