@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: deploy-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: api
+        image: api:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8081
+        volumeMounts:
+          - name: api-service-config
+            mountPath: "/config"
+      volumes:
+      - name: api-service-config
+        configMap:
+          name: api-config
+          items:
+            - key: application.properties
+              path: application.properties

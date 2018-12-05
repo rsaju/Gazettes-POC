@@ -1,18 +1,15 @@
 package com.gazette.poc.API.feignClientInterfaces;
 
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import com.gazette.poc.API.entities.UserDTO;
+import feign.Headers;
+import feign.RequestLine;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
-
-@FeignClient(name = "db-service", url = "http://db-service:8082")
+//@FeignClient(name = "db-service", url = "http://db-service:8082")
+@Headers("Accept: application/json")
 public interface DbService {
 
-    @GetMapping("/findBook/{bookname}")
-    String searchBookByName(@PathVariable("bookname") String bookname);
 
-    @GetMapping("/findAllBook")
-    public String findAllBook();
+    @Headers("Content-Type: application/json")
+    @RequestLine("POST" + "/add_user")
+    public void registerUser(UserDTO user);
 }
