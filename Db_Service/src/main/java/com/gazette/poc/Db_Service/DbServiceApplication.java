@@ -8,8 +8,6 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 @SpringBootApplication
 @EnableCircuitBreaker
-@EnableDiscoveryClient
-@RefreshScope
 public class DbServiceApplication {
 
 	public static void main(String[] args) {

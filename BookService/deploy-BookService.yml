@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: deploy-bookservice
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bookservice
+    spec:
+      containers:
+      - name: bookservice
+        image: bookservice:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8083
+        volumeMounts:
+          - name: book-service-config
+            mountPath: "/config"
+      volumes:
+      - name: book-service-config
+        configMap:
+          name: book-config
+          items:
+            - key: application.properties
+              path: application.properties

@@ -26,7 +26,7 @@ public class BookController {
 
     @GetMapping("/findBook/{bookname}")
     @HystrixCommand(fallbackMethod = "getSearchByName")
-    public String searchBookByName(HttpServletRequest request ,@PathVariable("bookname") String bookname) throws UnsupportedEncodingException {
+    public String searchBookByName(@PathVariable("bookname") String bookname) throws UnsupportedEncodingException {
 
             String jsonBook = null;
             String bookName = URLDecoder.decode(bookname, "UTF-8");
@@ -40,7 +40,7 @@ public class BookController {
         return jsonBook;
     }
 
-    public String getSearchByName(HttpServletRequest request ,@PathVariable("bookname") String bookname){
+    public String getSearchByName(@PathVariable("bookname") String bookname){
         System.out.println("Fall back method in search by name");
         return "fall back method for searchByName method";
     }
@@ -69,7 +69,7 @@ public class BookController {
     }
 
     @DeleteMapping("/deleteBook/{bookId}")
-    public String deleteBook(HttpServletRequest request, @PathVariable("bookId") int bookId){
+    public String deleteBook(@PathVariable("bookId") int bookId){
         try{
             bookService.deleteBybookId(bookId);
             return "Book deleted from Library"+bookId;
