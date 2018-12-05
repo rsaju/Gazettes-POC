@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: deploy-db-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: db-service
+    spec:
+      containers:
+      - name: db-service
+        image: db-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8082
+        volumeMounts:
+          - name: db-service-config
+            mountPath: "/config"
+      volumes:
+      - name: db-service-config
+        configMap:
+          name: db-config
+          items:
+            - key: application.properties
+              path: application.properties
