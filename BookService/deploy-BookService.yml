@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: deploy-bookservice
+  namespace: kube-system
 spec:
   replicas: 1
   template:
@@ -11,7 +12,7 @@ spec:
     spec:
       containers:
       - name: bookservice
-        image: bookservice:latest
+        image: bookservice:v1
         imagePullPolicy: Never
         ports:
         - containerPort: 8083
@@ -21,7 +22,7 @@ spec:
       volumes:
       - name: book-service-config
         configMap:
-          name: book-config
+          name: book-service-config
           items:
             - key: application.properties
               path: application.properties

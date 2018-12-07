@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: deploy-db-service
+  namespace: kube-system
 spec:
   replicas: 1
   template:
@@ -21,7 +22,7 @@ spec:
       volumes:
       - name: db-service-config
         configMap:
-          name: db-config
+          name: db-service-config
           items:
             - key: application.properties
               path: application.properties

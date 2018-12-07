@@ -1,7 +1,6 @@
 package com.gazette.poc.API.controllers;
 
 import com.gazette.poc.API.entities.UserDTO;
-import com.gazette.poc.API.feignClientInterfaces.DbService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
