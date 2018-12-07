@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gazette-poc-ingress
+  namespace: kube-system
+  annotations: {
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  }
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api/
+        backend:
+          serviceName: api
+          servicePort: 8081
+      - path: /book/
+        backend:
+          serviceName: bookservice
+          servicePort: 8083
+      - path: /
+        backend:
+          serviceName: default-http-backend
+          servicePort: 8080

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-static-content
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: static-content
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: static-content
+    spec:
+      containers:
+      - name: static-content
+        image: nginx-static-content:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80

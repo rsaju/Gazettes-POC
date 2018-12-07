@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gazette-poc-ingress-2
+  namespace: kube-system
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /bootstrap
+        backend:
+          serviceName: static-content-service
+          servicePort: 80
