@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: api
-        image: api:latest
+        image: api:v1.1
         imagePullPolicy: Never
         ports:
         - containerPort: 8081
