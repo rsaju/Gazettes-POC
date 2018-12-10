@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: deploy-db-service
   namespace: kube-system
+  annotations:
+    configmap.fabric8.io/update-on-change: "db-service-config"
 spec:
   replicas: 1
   template:
@@ -19,6 +21,8 @@ spec:
         volumeMounts:
           - name: db-service-config
             mountPath: "/config"
+#          - name: db-service-secret
+#            mountPath: "/secret"
       volumes:
       - name: db-service-config
         configMap:
@@ -26,3 +30,9 @@ spec:
           items:
             - key: application.properties
               path: application.properties
+#      - name: db-service-secret
+#        secret:
+#          secretName: db-service-secret
+#          items:
+#            - key: dbsecret.properties
+#              path: dbsecret.properties
