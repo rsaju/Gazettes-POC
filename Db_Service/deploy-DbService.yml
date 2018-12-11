@@ -3,10 +3,12 @@ kind: Deployment
 metadata:
   name: deploy-db-service
   namespace: kube-system
-  annotations:
-    configmap.fabric8.io/update-on-change: "db-service-config"
+  annotations: {
+    configmap.reloader.stakater.com/reload: "deploy-deb-service-configmap",
+    secret.reloader.stakater.com/reload: "deploy-db-service-secret"
+  }
 spec:
-  replicas: 1
+  replicas: 4
   template:
     metadata:
       labels:
@@ -14,25 +16,28 @@ spec:
     spec:
       containers:
       - name: db-service
-        image: db-service:latest
+        image: db-service:v1.1
+        env:
+          - name: SECRET_DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: deploy-db-service-secret
+                key: spring.datasource.username
+          - name: SECRET_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: deploy-db-service-secret
+                key: spring.datasource.password
         imagePullPolicy: Never
         ports:
         - containerPort: 8082
         volumeMounts:
           - name: db-service-config
             mountPath: "/config"
-#          - name: db-service-secret
-#            mountPath: "/secret"
       volumes:
       - name: db-service-config
         configMap:
-          name: db-service-config
+          name: deploy-db-service-configmap
           items:
             - key: application.properties
               path: application.properties
-#      - name: db-service-secret
-#        secret:
-#          secretName: db-service-secret
-#          items:
-#            - key: dbsecret.properties
-#              path: dbsecret.properties
