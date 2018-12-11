@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
 
@@ -50,7 +50,7 @@
 <header class="masthead">
     <div class="container d-flex h-100 align-items-center">
         <div class="mx-auto text-center">
-            <h1 class="mx-auto my-0 text-uppercase">Library Manager</h1>
+            <h1 class="mx-auto my-0 text-uppercase" th:text="${heading}"/>
             <h2 class="text-white-50 mx-auto mt-2 mb-5">View and Search for books in the Library</h2>
             <form class="form-inline d-flex" action="/book/searchbook" method="get">
                 <input type="text" class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" name="bookname" placeholder="Enter the name of the book...">
