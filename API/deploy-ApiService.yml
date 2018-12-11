@@ -3,8 +3,16 @@ kind: Deployment
 metadata:
   name: deploy-api
   namespace: kube-system
+  annotations:
+    configmap.reloader.stakater.com/reload: "deploy-api-configmap"
 spec:
   replicas: 1
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
   template:
     metadata:
       labels:
@@ -22,7 +30,7 @@ spec:
       volumes:
       - name: api-service-config
         configMap:
-          name: api-service-config
+          name: deploy-api-configmap
           items:
             - key: application.properties
               path: application.properties
